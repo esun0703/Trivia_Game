@@ -16,7 +16,7 @@ body {
 .jumbotron{
 	padding-top:50px;
 	height:528px;
-	background-color:rgba(94,214,244,.3);
+	background-color:rgba(94,214,244,0);
 	text-align:center;
 }
 
@@ -34,10 +34,11 @@ body {
 }
 
 .container-fluid{
-	margin-top:60px;
+	margin-top:50px;
 	width:100%;
-	height:500px;
-	background-color:rgba(221,65,242,.5);
+	height:600px;
+	background-color:rgba(94,214,244,.5);
+	/*(221,65,242,.5)*/
 }
 
 form {
@@ -96,7 +97,7 @@ ul li{
 }
 
 #replayButton{
-	margin-top:370px;
+	margin-top:180px;
 	width:150px;
 	border-radius:0;
 	border:none;
