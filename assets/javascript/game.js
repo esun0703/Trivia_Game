@@ -59,6 +59,7 @@ var timer= {
 		$("#timer").html(converted);
 		//if timer is up.
 		if(timer.time==00){
+			timer.time=10;
 			timer.stop()
 			timesUp();
 		};
@@ -146,13 +147,18 @@ $(document).ready(function(){
 		reset();
 		$("#replayButton").hide();
 	});
+
 });
 
 
 
-//when radio button checked, remembers the answer, and makes next button appear.
+//when radio button checked
+	//remembers the answer
+	//and makes next button appear.
 //next button makes next question appear.
+	//generate next 
 	//$("#nextButton").on("click", function(){};
+
 
 
 
