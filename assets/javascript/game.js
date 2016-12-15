@@ -34,6 +34,7 @@ var correctAnswers=0;
 var wrongAnswers=0;
 //boullion 
 var quizOver=false;
+var choseWrong=false;
 
 //tracks
 
@@ -98,17 +99,29 @@ function displayCurrentQuestion(){
 		choice=questions[0].choices[i];
 		$('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').addClass("answerRadio").appendTo("#choiceDisplay");
 		}
+	//regisiters click on radio button
+	$(".answerRadio").on("click", function(){
+		//sets the value of the radio button checked to a variable.
+		var choice = $('input[name="dynradio"]:checked').val()
+		$("#nextButton").show();
+		//compares to see if the answer is correct or not
+		if(choice==questions[0].correctAnswer){
+			choseWrong=false;
+			correctAnswers++;
+			console.log("Correct: "+ correctAnswers);
+		} else{
+			choseWrong=true
+			wrongAnswers++;
+			console.log("Wrong: " + wrongAnswers);
+		}
+	});
+
 	//debuggin
 	console.log(chosenQuestion);
 	console.log(choice);
 };
 
 
-
-//function mark answer(){} and keep track of the answer.
-	//function choose(){
-		//chosenQuestion++;
-	//}
 
 //function nextQuestion(){}
 
@@ -118,6 +131,7 @@ function timesUp (){
 	$("#questionDisplay").html("Sorry You're Out Of Time");
 	$("#choiceDisplay").html(" ");
 	$("#replayButton").show();
+	$("#nextButton").hide();
 	quizOver=true;
 };
 
@@ -145,17 +159,17 @@ $(document).ready(function(){
 	//when replay button is clicked;
 	$("#replayButton").on("click", function(){
 		reset();
+		//hides replay button when clicked
 		$("#replayButton").hide();
 	});
-	//when radio button checked
-		//remembers the answer
-		//and makes next button appear.
-	//when next button makes next question appear.
-		//generate next 
-		//$("#nextButton").on("click", function(){};
-
-
+	$("#nextButton").on("click", function(){
+		//hides next button when clicked
+		$("#nextButton").hide();
+		//nextQuestion();
+	});
 });
+
+
 
 
 
