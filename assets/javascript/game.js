@@ -147,17 +147,18 @@ $(document).ready(function(){
 		reset();
 		$("#replayButton").hide();
 	});
+	//when radio button checked
+		//remembers the answer
+		//and makes next button appear.
+	//when next button makes next question appear.
+		//generate next 
+		//$("#nextButton").on("click", function(){};
+
 
 });
 
 
 
-//when radio button checked
-	//remembers the answer
-	//and makes next button appear.
-//next button makes next question appear.
-	//generate next 
-	//$("#nextButton").on("click", function(){};
 
 
 
