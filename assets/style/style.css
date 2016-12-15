@@ -20,7 +20,7 @@ body {
 	text-align:center;
 }
 
-.btn{
+#play{
 	margin-top:280px;
 	border-radius:0;
 	border:none;
@@ -84,5 +84,23 @@ ul li{
 	font-family: 'Cormorant Infant', serif;
 	font-size:50px;
 	color:#fff;
+}
+
+#nextButton{
+	margin-top:370px;
+	width:150px;
+	border-radius:0;
+	border:none;
+	background-color:rgba(37,117,247,1);
+	font-family: 'Cormorant Infant', serif;
+}
+
+#replayButton{
+	margin-top:370px;
+	width:150px;
+	border-radius:0;
+	border:none;
+	background-color:rgba(37,117,247,1);
+	font-family: 'Cormorant Infant', serif;
 }
 

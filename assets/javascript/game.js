@@ -26,6 +26,8 @@ var questions=[{
 
 //tracks which question selected on
 var currentQuestion=0;
+//Array Containing User Choices
+var selections=[];
 //tracks the number of correct answers
 var correctAnswers=0;
 //tracks the number of wrong answers
@@ -39,24 +41,44 @@ var quizOver=false;
 for(let i=0; i<questions.length; i++){
 console.log(questions[i]);
 };
-
-var timer= {
-	
-	time:30,
-
-	start: function(){
-		myTimer=setInterval(timer.count,1000)
-	
+var timer= {	
+	time:10,
+	restart: function(){
+		$("#timer").html("00:00");
 	},
-
+	start: function(){
+		$("#timer").html("01:00");
+		myTimer=setInterval(timer.count,1000)	
+	},
 	stop: function(){
 		clearInterval(myTimer);
 	},
-	
 	count: function(){
 		timer.time--;
-		$("#timer").html("00:"+ timer.time);
+		var converted = timer.timeConverter(timer.time);
+		$("#timer").html(converted);
+		//if timer is up.
+		if(timer.time==00){
+			timer.stop()
+			timesUp();
+		};
 	},
+	//Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+	timeConverter: function(t){
+		var minutes = Math.floor(t/60);
+		var seconds = t - (minutes * 60);
+		if (seconds<10){
+			seconds="0" + seconds;
+		}
+		if (minutes===0){
+			"00";
+		}
+		else if (minutes<10){
+			minutes ="0" + minutes;
+		}
+		//"0" temporary fix for formatting
+		return minutes + "0:" + seconds;
+	}
 };
 
 
@@ -65,20 +87,16 @@ var timer= {
 function displayCurrentQuestion(){
 	var chosenQuestion;
 	var choice;
-	
 	//gets question...!!!!! so I kind of f-ed up this part
 	for(i=0; i<questions.length;i++){
-		chosenQuestion=questions[i].question;
-		$("#questionDisplay").append(chosenQuestion);
+		chosenQuestion=questions[0].question;
 	}
-	//displays question onto questionDisplay div
-	
-
-	for(i=0;i<questions[i].choices.length;i++){
-		choice=questions[i].choices[i];
-		$('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').appendTo("#choiceDisplay");
+	$("#questionDisplay").html(chosenQuestion);
+	//displays question onto question Display divso I kind of f-ed up this part
+	for(i=0;i<questions[0].choices.length;i++){
+		choice=questions[0].choices[i];
+		$('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').addClass("answerRadio").appendTo("#choiceDisplay");
 		}
-
 	//debuggin
 	console.log(chosenQuestion);
 	console.log(choice);
@@ -86,15 +104,55 @@ function displayCurrentQuestion(){
 
 
 
+//function mark answer(){} and keep track of the answer.
+	//function choose(){
+		//chosenQuestion++;
+	//}
+
+//function nextQuestion(){}
+
+//What shows up when time is Up
+function timesUp (){
+	$("#timer").html("00:00");
+	$("#questionDisplay").html("Sorry You're Out Of Time");
+	$("#choiceDisplay").html(" ");
+	$("#replayButton").show();
+	quizOver=true;
+};
+
+//Function to reset board.
+function reset(){
+	$("#timer").html("01:00");
+	$("#questionDisplay").html("");
+	$("#choiceDisplay").html(" ");
+	displayCurrentQuestion();
+	timer.start();//something wrong with timer after reset board.
+
+};
+
 
 //Game Play
 //================================================================
 $(document).ready(function(){
+	$("#nextButton").hide();
+	$("#replayButton").hide();
 	//display the first question
 	$("#play").on("click", function(){
 		displayCurrentQuestion();
 		timer.start();
 	});
-
+	//when replay button is clicked;
+	$("#replayButton").on("click", function(){
+		reset();
+		$("#replayButton").hide();
+	});
 });
+
+
+
+//when radio button checked, remembers the answer, and makes next button appear.
+//next button makes next question appear.
+	//$("#nextButton").on("click", function(){};
+
+
 
