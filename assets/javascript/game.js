@@ -91,30 +91,32 @@ function displayCurrentQuestion(){
 	var choice;
 	//gets question...!!!!! so I kind of f-ed up this part
 	for(i=0; i<questions.length;i++){
-		chosenQuestion=questions[0].question;
-	}
-	$("#questionDisplay").html(chosenQuestion);
-	//displays question onto question Display divso I kind of f-ed up this part
-	for(i=0;i<questions[0].choices.length;i++){
-		choice=questions[0].choices[i];
-		$('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').addClass("answerRadio").appendTo("#choiceDisplay");
+		chosenQuestion=questions[i].question;
+		$("#questionDisplay").html(chosenQuestion);
+		//displays question onto question Display div so I kind of f-ed up this part
+		for(i=0;i<questions[i].choices.length;i++){
+			choice=questions[i].choices[i];
+			$('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').addClass("answerRadio").appendTo("#choiceDisplay");
 		}
-	//regisiters click on radio button
-	$(".answerRadio").on("click", function(){
+		//regisiters click on radio button
+		$(".answerRadio").on("click", function(){
 		//sets the value of the radio button checked to a variable.
-		var choice = $('input[name="dynradio"]:checked').val()
-		$("#nextButton").show();
-		//compares to see if the answer is correct or not
-		if(choice==questions[0].correctAnswer){
-			choseWrong=false;
-			correctAnswers++;
-			console.log("Correct: "+ correctAnswers);
-		} else{
-			choseWrong=true
-			wrongAnswers++;
-			console.log("Wrong: " + wrongAnswers);
-		}
-	});
+			var choice = $('input[name="dynradio"]:checked').val()
+			$("#nextButton").show();
+			//compares to see if the answer is correct or not	
+			if(choice==questions[i].correctAnswer){
+				choseWrong=false;
+				correctAnswers++;
+				console.log("Correct: "+ correctAnswers);
+			} else{
+				choseWrong=true
+				wrongAnswers++;
+				console.log("Wrong: " + wrongAnswers);
+			}
+
+		});
+	}
+	
 
 	//debuggin
 	console.log(chosenQuestion);
@@ -141,7 +143,7 @@ function reset(){
 	$("#questionDisplay").html("");
 	$("#choiceDisplay").html(" ");
 	displayCurrentQuestion();
-	timer.start();//something wrong with timer after reset board.
+	timer.stop();//something wrong with timer after reset board.
 
 };
 
@@ -161,6 +163,7 @@ $(document).ready(function(){
 		reset();
 		//hides replay button when clicked
 		$("#replayButton").hide();
+		timer.start();
 	});
 	$("#nextButton").on("click", function(){
 		//hides next button when clicked
