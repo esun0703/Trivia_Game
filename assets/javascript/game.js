@@ -35,6 +35,9 @@ var wrongAnswers=0;
 //boullion 
 var quizOver=false;
 var choseWrong=false;
+var chosenQuestion;
+var choice;
+var currentIndex=0
 
 //tracks
 
@@ -84,27 +87,48 @@ var timer= {
 };
 
 
+
+
 //Functions
 //================================================================
-function displayCurrentQuestion(){
-	var chosenQuestion;
-	var choice;
+function displayCurrentQuestion(i){
+	
 	//gets question...!!!!! so I kind of f-ed up this part
-	for(i=0; i<questions.length;i++){
-		chosenQuestion=questions[i].question;
+	// for(let i=0; i<questions.length;i++){
+		chosenQuestion=questions[currentIndex].question;
 		$("#questionDisplay").html(chosenQuestion);
-		//displays question onto question Display div so I kind of f-ed up this part
-		for(i=0;i<questions[i].choices.length;i++){
-			choice=questions[i].choices[i];
+		//displays question onto question Display div so I kind of f-ed up this part		
+	// }
+	makeRadios();
+	clickRadio();
+}
+/*function displayAllQuestion(){
+	
+	//gets question...!!!!! so I kind of f-ed up this part
+	for(let i=0; i<questions.length;i++){
+		chosenQuestion=questions[currentIndex].question;
+		$("#questionDisplay").html(chosenQuestion);
+		//displays question onto question Display div so I kind of f-ed up this part		
+	}
+	makeRadios();
+	clickRadio();
+}*/
+
+function makeRadios(){
+	for(let i=0;i<questions[currentIndex].choices.length;i++){
+			choice=questions[currentIndex].choices[i];
 			$('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').addClass("answerRadio").appendTo("#choiceDisplay");
 		}
-		//regisiters click on radio button
+}
+
+function clickRadio(){
+	//regisiters click on radio button
 		$(".answerRadio").on("click", function(){
 		//sets the value of the radio button checked to a variable.
-			var choice = $('input[name="dynradio"]:checked').val()
+			var choices = $('input[name="dynradio"]:checked').val()
 			$("#nextButton").show();
 			//compares to see if the answer is correct or not	
-			if(choice==questions[i].correctAnswer){
+			if(choices==questions[currentIndex].correctAnswer){
 				choseWrong=false;
 				correctAnswers++;
 				console.log("Correct: "+ correctAnswers);
@@ -115,13 +139,12 @@ function displayCurrentQuestion(){
 			}
 
 		});
-	}
+}
 	
 
 	//debuggin
 	console.log(chosenQuestion);
 	console.log(choice);
-};
 
 
 
@@ -156,7 +179,7 @@ $(document).ready(function(){
 	//display the first question
 	$("#play").on("click", function(){
 		displayCurrentQuestion();
-		timer.start();
+		//timer.start();
 	});
 	//when replay button is clicked;
 	$("#replayButton").on("click", function(){
@@ -168,6 +191,8 @@ $(document).ready(function(){
 	$("#nextButton").on("click", function(){
 		//hides next button when clicked
 		$("#nextButton").hide();
+		currentIndex++;
+		displayCurrentQuestion()
 		//nextQuestion();
 	});
 });
