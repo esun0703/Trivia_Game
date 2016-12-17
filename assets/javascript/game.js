@@ -95,6 +95,7 @@ function displayCurrentQuestion(i){
 	
 	//gets question...!!!!! so I kind of f-ed up this part
 	// for(let i=0; i<questions.length;i++){
+
 		chosenQuestion=questions[currentIndex].question;
 		$("#questionDisplay").html(chosenQuestion);
 		//displays question onto question Display div so I kind of f-ed up this part		
@@ -115,9 +116,11 @@ function displayCurrentQuestion(i){
 }*/
 
 function makeRadios(){
+	$("#choiceDisplay").empty();
 	for(let i=0;i<questions[currentIndex].choices.length;i++){
 			choice=questions[currentIndex].choices[i];
-			$('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').addClass("answerRadio").appendTo("#choiceDisplay");
+			var radioButtons = $('<li><input type="radio" value=' + i + ' name="dynradio"/> &nbsp;' + choice + '</li>').addClass("answerRadio");
+			$("#choiceDisplay").append(radioButtons);
 		}
 }
 
@@ -140,11 +143,6 @@ function clickRadio(){
 
 		});
 }
-	
-
-	//debuggin
-	console.log(chosenQuestion);
-	console.log(choice);
 
 
 
@@ -170,6 +168,10 @@ function reset(){
 
 };
 
+function displayResults(){
+	$("#winDisplay").html("Correct: " + correctAnswers);
+	$("#wrongDisplay").html("Wrong: " + wrongAnswers);
+}
 
 //Game Play
 //================================================================
@@ -179,7 +181,7 @@ $(document).ready(function(){
 	//display the first question
 	$("#play").on("click", function(){
 		displayCurrentQuestion();
-		//timer.start();
+		timer.start();
 	});
 	//when replay button is clicked;
 	$("#replayButton").on("click", function(){
@@ -192,12 +194,17 @@ $(document).ready(function(){
 		//hides next button when clicked
 		$("#nextButton").hide();
 		currentIndex++;
+		displayCurrentQuestion();
+		/*if(currentIndex<=questions.length){
 		displayCurrentQuestion()
-		//nextQuestion();
+		} else{
+		displayResults();	
+		}
+		//nextQuestion();*/
 	});
 });
 
-
+//Need to stop current index from adding one if past questions.length.
 
 
 
